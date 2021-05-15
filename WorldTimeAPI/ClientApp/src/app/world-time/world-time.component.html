@@ -1,0 +1,32 @@
+<h1>World Time</h1>
+
+<div *ngIf="loading">
+  <p><em>Loading...</em></p>
+</div>
+
+<div *ngIf="error">
+  <h2>Loading API failed please try again later.</h2>
+</div>
+
+<div *ngIf="!error && !loading">
+  <div *ngIf="response?.client_ip; else timezones">
+    <h5>Today is {{response.datetime | date:'fullDate'}}</h5>
+    <h5>Time: {{response.datetime | date:'shortTime'}}</h5>
+    <h5>Timezone: {{response.timezone}}</h5>
+    <h5>Abbreviation: {{response.abbreviation}}</h5>
+  </div>
+</div>
+
+<ng-template #timezones>
+  <div>
+    <h4>List of available timezones</h4>
+    <h5>The time zone you specified does not exist, below is a list of valid zones</h5>
+
+    <ul class="timezones">
+      <li *ngFor="let timezone of response">
+        <span>{{timezone}}</span>
+      </li>
+    </ul>
+  </div>
+</ng-template>
+
